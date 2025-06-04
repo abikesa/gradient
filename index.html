@@ -3,26 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <title>Signal/Noise Dashboard</title>
+  <link rel="icon" href="favicon.ico" />
   <style>
     body {
-      font-family: system-ui, sans-serif;
-      background: #f7f7f7;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: #fdfdfd;
+      color: #333;
+      max-width: 800px;
+      margin: auto;
       padding: 2rem;
     }
     h1 {
-      color: #222;
+      font-size: 2rem;
+      margin-bottom: 1rem;
     }
     ul {
       list-style-type: none;
       padding: 0;
     }
     li {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
       margin-bottom: 0.5rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
     a {
       text-decoration: none;
-      color: #007acc;
-      font-weight: bold;
+      color: #0056b3;
+      font-weight: 500;
+    }
+    a:hover {
+      color: #003d80;
     }
     iframe {
       width: 100%;
@@ -34,38 +47,41 @@
   </style>
 </head>
 <body>
-  <h1>🧠 Signal/Noise Dashboard</h1>
+  <h1>🧠 Signal<a href="https://abikesa.github.io/sanity">/</a>Noise Dashboard</h1>
   <p>Select a layer view:</p>
-  <ul id="links">
-    <!-- Dynamically filled -->
-  </ul>
+  <ul id="links"></ul>
 
   <iframe id="viewer" src=""></iframe>
 
   <script>
     const views = [
-      "docs/symbolic_done",
-      "docs/network_done",
-      "docs/sensorimotor_done",
-      "docs/synaptic_done",
-      "docs/axonal_done"
+      
+      
+      { label: "Molecular/Synaptic 🌊", file: "docs/synaptic_done.html" },
+      { label: "Cellular/Axonal ❤️", file: "docs/axonal_done.html" },
+      { label: "Proprioceptive/Sensorimotor 🌀", file: "docs/sensorimotor_done.html" },
+      { label: "Large Networks 🐬", file: "docs/network_done.html" },
+      { label: "Transmuted/Ukuvela 🔁", file: "docs/symbolic_done.html" },
     ];
 
     const links = document.getElementById("links");
     const viewer = document.getElementById("viewer");
 
-    views.forEach(name => {
+    views.forEach(view => {
       const li = document.createElement("li");
       const link = document.createElement("a");
-      link.href = `${name}.html`;
-      link.textContent = name.replace("_", " ").toUpperCase();
+      link.href = view.file;
+      link.textContent = view.label;
       link.onclick = (e) => {
         e.preventDefault();
-        viewer.src = link.href;
+        viewer.src = view.file;
       };
       li.appendChild(link);
       links.appendChild(li);
     });
+
+    // Load first view by default
+    viewer.src = views[0].file;
   </script>
 </body>
 </html>
